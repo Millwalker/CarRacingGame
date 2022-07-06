@@ -205,12 +205,18 @@
         <img class="aImg" id="t2" src="https://image.ibb.co/jajjDJ/t2.png">
         <img class="aImg" id="t3" src="https://image.ibb.co/it4jDJ/t5.png">
         <img class="aImg" id="t4" src="https://image.ibb.co/ksy0nd/t4.png">
-        <img class="aImg" id="c1" src="https://image.ibb.co/f4v7YJ/c2.png">
-        <!--adapt image paths to your own-->
-		<img class="aImg" id="c2" src="/home/julian/CarRacingGame/Images/car_mini.png">
-		<img class="aImg" id="c3" src="/home/julian/CarRacingGame/Images/car_hyundai.png">
-		<img class="aImg" id="c4" src="/home/julian/CarRacingGame/Images/car_tesla.png">
-        <img class="aImg" id="c5" src="/home/julian/CarRacingGame/Images/car_acura.png">
+        <img class="aImg" id="c0" src="https://www.clipartmax.com/png/full/133-1330751_police-car-back-png-clip-back-of-police-car-clipart.png">
+        <img class="aImg" id="c1" src="https://www.nicepng.com/png/full/950-9500116_chevrolet-camaro-chevy-pony-car-automobile-car-camaro.png">
+        <!--"https://image.ibb.co/f4v7YJ/c2.png"-->
+
+		<img class="aImg" id="c2" src="https://www.clipartmax.com/png/full/177-1778244_a-blue-audi-in-a-parking-spot-car-back-side-png.png">
+		<img class="aImg" id="c3" src="https://www.nicepng.com/png/full/415-4154309_car-back-view-png-2015-chevy-volt-back.png">
+		<img class="aImg" id="c4" src="https://www.nicepng.com/png/full/339-3391611_back-of-gmc-truck.png">
+        <img class="aImg" id="c5" src="https://www.nicepng.com/png/full/128-1281437_truck-back-png-gallery-images-and-information-back.png">
+        <img class="aImg" id="c6" src="https://www.clipartmax.com/png/full/288-2885976_car-back-png-download-maruti-suzuki-new-car.png">
+        <img class="aImg" id="c7" src="https://www.nicepng.com/png/full/128-1280675_car-back-png-jpg-library-stock-2017-audi.png">
+        <img class="aImg" id="c8" src="https://www.dlf.pt/png/big/15/151339_car-back-view-png.png">
+
         <script>   
                    
         var ld;
@@ -247,8 +253,32 @@
 
         
         function loadGame(){
+
+            // set time for the particular countdown
+            minutes=2;
+            seconds=0;
+            var time = minutes*60 + seconds;
+
             document.getElementById("timer").style.display="inline-block";
-            countdown('timer', 2, 0);
+            var intv_cd = setInterval(function() {
+                var el = document.getElementById("timer");          
+                     // if the time is 0 then end the counter
+                if (time <= 0) {
+                    clearInterval(intv_cd);
+                    clearInterval(intv);
+                    setTimeout(function(){   
+                        clearGame();
+                    },1000);                    
+                    return;
+                }
+                var minutes = Math.floor( time / 60 );
+                if (minutes < 10) minutes = "0" + minutes;
+                var seconds = time % 60;
+                if (seconds < 10) seconds = "0" + seconds; 
+                var text = minutes + ':' + seconds;
+                el.innerHTML = text;
+                time --;
+            }, 1000);
 
             "use strict";
 
@@ -257,30 +287,6 @@
                 document.getElementById("startPage").style.display = "block";
                 document.getElementById("timer").style.display="None";
                 return;
-            }
-
-            function countdown(element, minutes, seconds) {
-                // set time for the particular countdown
-                var time = minutes*60 + seconds;
-                var interval = setInterval(function() {
-                    var el = document.getElementById(element);          
-                     // if the time is 0 then end the counter
-                    if (time <= 0) {
-                        clearInterval(interval);
-                        clearInterval(intv);
-                        setTimeout(function(){   
-                            clearGame();
-                        },1000);                    
-                        return;
-                    }
-                    var minutes = Math.floor( time / 60 );
-                    if (minutes < 10) minutes = "0" + minutes;
-                    var seconds = time % 60;
-                    if (seconds < 10) seconds = "0" + seconds; 
-                    var text = minutes + ':' + seconds;
-                    el.innerHTML = text;
-                    time --;
-                }, 1000);
             }
             
             var roadWidth = 5*w/36;
@@ -310,7 +316,7 @@
             var tMaxH = h*20/36;
             var treeCnst = tMaxH/roadLeft;
             
-            var gameDifficulty = 100;
+            var gameDifficulty = 50;
             
             
             
@@ -376,12 +382,13 @@
                 this.y += this.dy;
                 this.x = (carWCnst/2)*(h-this.y)+(w-(carWCnst*(h-this.y)))*this.lane/8;
                 this.w = carW-carW*carWCnst*(h-this.y)/w;
-                this.h = 1.7*this.w/3;
+                this.h = 1.7*this.w/2.5;
                 
                 ctx.drawImage(this.src,this.x,this.y-this.h,this.w,this.h);
                 if(this.y >= h-20){
                     if(Math.abs(this.x-cx) <= carH && Math.abs(this.y-h+carH) <= carH){
                         clearInterval(intv);
+                        clearInterval(intv_cd)
                         setTimeout(function(){
                             clearGame();
                         },1000);
@@ -393,15 +400,15 @@
                     this.w = 0;
                     this.left = Math.random()*3;
                     this.dy = 0.5;
-                    this.lane = 1+Math.random()*5;
+                    this.lane = 0.1+Math.random()*7;
                 }
             }
             
-            var carSrc = [_i("c2"),_i("c3"),_i("c4"),_i("c5")];
+            var carSrc = [_i("c2"),_i("c3"),_i("c4"),_i("c5"),_i("c6"),_i("c7"),_i("c8")];
             
             var cars = [];
             for(var n = 0; n < ((h*0.7+100)/gameDifficulty); n++){
-                cars.push(new CarBuilder(Math.floor(Math.random()*4),stp+n*gameDifficulty,1));
+                cars.push(new CarBuilder(Math.floor(Math.random()*7),stp+n*gameDifficulty,1));
             }
             
             //Coin.....
@@ -454,8 +461,8 @@
             var coinSrc = [_i("cn"),_i("cn2"),_i("cn05")];
             
             var coins = [];
-            for(var n = 0; n < ((h*0.7+100)/(gameDifficulty-50)); n++){
-                coins.push(new CoinBuilder(stp+n*(gameDifficulty-50),6));
+            for(var n = 0; n < ((h*0.7+100)/50); n++){
+                coins.push(new CoinBuilder(stp+n*50,6));
             }
             
  
