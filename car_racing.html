@@ -197,7 +197,8 @@
         
         
         <div id="mainContainer" style="background:#006400" >
-            <img id="city" src="https://www.backpackertrail.de/wp-content/webp-express/webp-images/uploads/2021/01/Berlin-Panorama.jpg.webp">
+            <img id="city" src="https://upload.wikimedia.org/wikipedia/commons/5/54/Berlin_Panorama_Mitte.jpg">
+            <!--Link to license: https://de.wikipedia.org/wiki/Datei:Berlin_Panorama_Mitte.jpg-->
             <canvas id="myCanvas"style="/*background:#9de732*/" ></canvas>
         </div>
        <img class="aImg" id="t1" src="https://pics.clipartpng.com/midle/Green_Tree_PNG_Clip_Art-3187.png">
@@ -247,7 +248,7 @@
         
         function loadGame(){
             document.getElementById("timer").style.display="inline-block";
-            countdown('timer', 0, 5);
+            countdown('timer', 2, 0);
 
             "use strict";
 
@@ -265,7 +266,6 @@
                     var el = document.getElementById(element);          
                      // if the time is 0 then end the counter
                     if (time <= 0) {
-                        el.innerHTML = text;
                         clearInterval(interval);
                         clearInterval(intv);
                         setTimeout(function(){   
