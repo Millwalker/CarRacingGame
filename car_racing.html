@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" >
     </head>
     <style>
-                  body{
+            body{
                 margin:0;
                 height:100vh;
                 width:100vw;
@@ -43,13 +43,26 @@
             #mainContainer {
                 display:none;
             }
+            #timer {
+                position:absolute;
+                left:0;
+                background:transparent;
+                display:inline-block;
+                border-radius:20px;
+                font-weight:700;
+                font-size:24px; 
+                height:30px;
+                margin:10px;
+                z-index:1000;
+                transform-origin:100% 0%;
+            }
             
             #scoreDiv {
                 position:absolute;
                 right:0;
                 background:transparent;
                 display:inline-block;
-                border:3px solid yellow;
+                border:3px solid gold;
                 padding:3px 50px 3px 10px;
                 border-radius:20px;
                 font-weight:700;
@@ -60,22 +73,6 @@
                 transform-origin:100% 0%;
             }
 
-            #timer {
-                position:absolute;
-                left:0;
-                background:transparent;
-                display:inline-block;
-                padding:3px 50px 3px 10px;
-                border-radius:20px;
-                font-weight:700;
-                font-size:24px; 
-                height:30px;
-                margin:10px;
-                z-index:1000;
-                transform-origin:100% 0%
-            }
-            
-            
             #cn {
                 height:52px;
                 width:52px;
@@ -99,7 +96,7 @@
             
             #gameTitle {
                 text-align:center;
-                font-family:cursive;
+                font-family:fantasy;
                 font-size:35px;
                 margin-top:50px;
                 font-weight:800;
@@ -123,11 +120,30 @@
                 height:100%;
                 background:red;
             }
-            
-            #gameDifficulty {
-                width:100%;
-                height:50%;
+            /*difficulties easy, medium, hard */
+            #eD {
+                width:10%;
+                height:5%;
                 background:blue;
+                color:#fff;
+                padding:0;
+                margin:0;
+            }
+
+            #mD {
+                width:10%;
+                height:5%;
+                background:blue;
+                color:#fff;
+                padding:0;
+                margin:0;
+            }
+
+            #hD {
+                width:10%;
+                height:5%;
+                background:blue;
+                color:#fff;
                 padding:0;
                 margin:0;
             }
@@ -160,10 +176,24 @@
                 }
             }
     </style>
+    <script>
+    let gameDifficulty;
+
+    function changeDifficulty(dif) {
+        gameDifficulty=dif;
+    }
+    function setColor(btn1,btn2,btn3,color){
+        var property = document.getElementById(btn1);
+        property.style.backgroundColor = color;
+        var prop2 = document.getElementById(btn2);
+        prop2.style.backgroundColor = '#0000FF';
+        var prop3 = document.getElementById(btn3);
+        prop3.style.backgroundColor = '#0000FF';
+    } 
+    </script>
     <body onload="done()">
         <div id="timer"></div>
-        <body onload="countdown()"> </body>
-
+    </body>
         <div id="scoreDiv">
             <span id="score">0</span>
             <img src="https://upload.wikimedia.org/wikipedia/de/0/0f/1_euro_coin_Eu_serie_1.png" id="cn">
@@ -174,9 +204,11 @@
             <div id="gameTitle">Car Racing Game</div>
             <button onclick="ld()" id="playBtn"><span style="font-size:18px">Loading Assets<br>Bitte warten...<br></span></button><br>
             <div id="ldc"><div id="loading"></div></div>
-            <p>Du fährst auf der A13 Richtung Berlin und Kleingeld liegt auf der Straße.<br>
-            Glücklicherweise ist dein Fahrzeug mit einem integrierten Staubsauger ausgestattet. </p>
+            <p>Sammle soviel Geld ein, wie du kannst!</p>
             <p>Rotiere dein Smartphone und neige links/rechts oder tippe links/rechts auf dem Bildschirm, um das Auto zu bewegen.<br>Nutze die Pfeiltasten links/rechts auf dem PC.</p>
+            <button onclick="changeDifficulty(210);setColor('eD','mD','hD',' #ff5733');" div id = "eD"><b>Leicht</b></button>
+            <button onclick="changeDifficulty(140);setColor('mD','eD','hD','#ff5733');"div id = "mD"><b>Mittel</b></button>
+            <button onclick="changeDifficulty(70);setColor('hD','eD','mD','#ff5733');"div id = "hD"><b>Schwierig</b></button> 
             <script type="text/javascript">
                 (function(){
                     "use strict"
@@ -184,12 +216,15 @@
                     var hh = window.innerHeight || 560;
                     var gameHome = document.getElementById("startPage");
                     var scoreDiv = document.getElementById("scoreDiv");
+                    var timer = document.getElementById("timer")
                     if(hh > hw){
                         gameHome.style.height = hw+"px";
                         gameHome.style.width = hh+"px";
                         gameHome.style.transform = "translateX("+hw+"px) rotate(90deg)";
                         scoreDiv.style.bottom = 0;
                         scoreDiv.style.transform = "rotate(90deg) translateX(40px)";
+                        timer.style.right = 0;
+                        timer.style.transform = "rotate(90deg) translateX("+hw+"px)";
                     }
                 })();
             </script>
@@ -205,11 +240,10 @@
         <img class="aImg" id="t2" src="https://image.ibb.co/jajjDJ/t2.png">
         <img class="aImg" id="t3" src="https://image.ibb.co/it4jDJ/t5.png">
         <img class="aImg" id="t4" src="https://image.ibb.co/ksy0nd/t4.png">
-        <img class="aImg" id="c0" src="https://www.clipartmax.com/png/full/133-1330751_police-car-back-png-clip-back-of-police-car-clipart.png">
-        <img class="aImg" id="c1" src="https://www.nicepng.com/png/full/950-9500116_chevrolet-camaro-chevy-pony-car-automobile-car-camaro.png">
-        <!--"https://image.ibb.co/f4v7YJ/c2.png"-->
-
-		<img class="aImg" id="c2" src="https://www.clipartmax.com/png/full/177-1778244_a-blue-audi-in-a-parking-spot-car-back-side-png.png">
+        <img class="aImg" id="c1" src="https://www.clipartmax.com/png/full/133-1330751_police-car-back-png-clip-back-of-police-car-clipart.png">
+        <img class="aImg" id="c0" src="https://www.nicepng.com/png/full/950-9500116_chevrolet-camaro-chevy-pony-car-automobile-car-camaro.png">
+        <!--"https://image.ibb.co/f4v7YJ/c2.png" -->
+        <img class="aImg" id="c2" src="https://www.clipartmax.com/png/full/177-1778244_a-blue-audi-in-a-parking-spot-car-back-side-png.png">
 		<img class="aImg" id="c3" src="https://www.nicepng.com/png/full/415-4154309_car-back-view-png-2015-chevy-volt-back.png">
 		<img class="aImg" id="c4" src="https://www.nicepng.com/png/full/339-3391611_back-of-gmc-truck.png">
         <img class="aImg" id="c5" src="https://www.nicepng.com/png/full/128-1281437_truck-back-png-gallery-images-and-information-back.png">
@@ -255,6 +289,11 @@
         function loadGame(){
 
             // set time for the particular countdown
+
+            if (gameDifficulty==undefined){
+                gameDifficulty=140
+            }
+
             minutes=2;
             seconds=0;
             var time = minutes*60 + seconds;
@@ -262,7 +301,7 @@
             document.getElementById("timer").style.display="inline-block";
             var intv_cd = setInterval(function() {
                 var el = document.getElementById("timer");          
-                     // if the time is 0 then end the counter
+                // if the time is 0 then end the counter
                 if (time <= 0) {
                     clearInterval(intv_cd);
                     clearInterval(intv);
@@ -315,8 +354,6 @@
             var stp = h-totalHeight;
             var tMaxH = h*20/36;
             var treeCnst = tMaxH/roadLeft;
-            
-            var gameDifficulty = 50;
             
             
             
@@ -382,7 +419,7 @@
                 this.y += this.dy;
                 this.x = (carWCnst/2)*(h-this.y)+(w-(carWCnst*(h-this.y)))*this.lane/8;
                 this.w = carW-carW*carWCnst*(h-this.y)/w;
-                this.h = 1.7*this.w/2.5;
+                this.h = 1.7*this.w/3;
                 
                 ctx.drawImage(this.src,this.x,this.y-this.h,this.w,this.h);
                 if(this.y >= h-20){
@@ -400,7 +437,7 @@
                     this.w = 0;
                     this.left = Math.random()*3;
                     this.dy = 0.5;
-                    this.lane = 0.1+Math.random()*7;
+                    this.lane = 1+Math.random()*5;
                 }
             }
             
@@ -462,12 +499,10 @@
             
             var coins = [];
             for(var n = 0; n < ((h*0.7+100)/50); n++){
-                coins.push(new CoinBuilder(stp+n*50,6));
+                coins.push(new CoinBuilder(stp+n*(gameDifficulty-50),6));
             }
             
- 
             //End Coin...
-            
             
             
             function rectPoints(n,ho){
