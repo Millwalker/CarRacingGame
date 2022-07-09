@@ -73,6 +73,31 @@
                 transform-origin:100% 0%;
             }
 
+            #highscore {
+                position:absolute;
+                left: 50px;
+                background:transparent;
+                display:inline-block;
+                border:3px solid purple;
+                padding:3px 10px 50px 10px;
+                border-radius:200px;
+                font-weight:300;
+                font-size:24px; 
+                height:30px;
+                margin:10px;
+                z-index:auto;
+                transform-origin:100% 0%;
+            }
+
+            #hsNumber {
+                position: absolute;
+                left:170px;
+                font-family:fantasy;
+                font-size:35px;
+                margin-top:45px;
+                font-weight:800;
+            }
+
             #cn {
                 height:52px;
                 width:52px;
@@ -182,14 +207,19 @@
     function changeDifficulty(dif) {
         gameDifficulty=dif;
     }
-    function setColor(btn1,btn2,btn3,color){
+    function setColors(btn1,btn2,btn3,color){
         var property = document.getElementById(btn1);
         property.style.backgroundColor = color;
         var prop2 = document.getElementById(btn2);
         prop2.style.backgroundColor = '#0000FF';
         var prop3 = document.getElementById(btn3);
         prop3.style.backgroundColor = '#0000FF';
-    } 
+    }
+
+    if (localStorage.getItem("local_hs")==null){
+        localStorage.setItem("local_hs", 0);  
+    }
+
     </script>
     <body onload="done()">
         <div id="timer"></div>
@@ -202,14 +232,17 @@
         </div>
         <div class="gameHome" id="startPage">
             <div id="gameTitle">Car Racing Game</div>
+            <div id="highscore">Aktueller Highscore</div>
+            <div id="hsNumber" >0</div>
             <button onclick="ld()" id="playBtn"><span style="font-size:18px">Loading Assets<br>Bitte warten...<br></span></button><br>
             <div id="ldc"><div id="loading"></div></div>
             <p>Sammle soviel Geld ein, wie du kannst!</p>
             <p>Rotiere dein Smartphone und neige links/rechts oder tippe links/rechts auf dem Bildschirm, um das Auto zu bewegen.<br>Nutze die Pfeiltasten links/rechts auf dem PC.</p>
-            <button onclick="changeDifficulty(210);setColor('eD','mD','hD',' #ff5733');" div id = "eD"><b>Leicht</b></button>
-            <button onclick="changeDifficulty(140);setColor('mD','eD','hD','#ff5733');"div id = "mD"><b>Mittel</b></button>
-            <button onclick="changeDifficulty(70);setColor('hD','eD','mD','#ff5733');"div id = "hD"><b>Schwierig</b></button> 
+            <button onclick="changeDifficulty(210);setColors('eD','mD','hD',' #ff5733');" div id = "eD"><b>Leicht</b></button>
+            <button onclick="changeDifficulty(140);setColors('mD','eD','hD','#ff5733');"div id = "mD"><b>Mittel</b></button>
+            <button onclick="changeDifficulty(70);setColors('hD','eD','mD','#ff5733');"div id = "hD"><b>Schwierig</b></button> 
             <script type="text/javascript">
+
                 (function(){
                     "use strict"
                     var hw = window.innerWidth || 360;
@@ -251,7 +284,9 @@
         <img class="aImg" id="c7" src="https://www.nicepng.com/png/full/128-1280675_car-back-png-jpg-library-stock-2017-audi.png">
         <img class="aImg" id="c8" src="https://www.dlf.pt/png/big/15/151339_car-back-view-png.png">
 
-        <script>   
+        <script>
+        var hscore = document.getElementById("hsNumber");
+        hscore.textContent = localStorage.getItem("local_hs");
                    
         var ld;
         var loaded = false;
@@ -325,6 +360,10 @@
                 document.getElementById("mainContainer").style.display = "none";
                 document.getElementById("startPage").style.display = "block";
                 document.getElementById("timer").style.display="None";
+                if(score>hscore.textContent){
+                    hscore.textContent = score;
+                }
+                localStorage.setItem("local_hs", hscore.textContent);       
                 return;
             }
             
@@ -334,6 +373,7 @@
             var roadConstant = roadLeft/(h-roadTop);
             var score = 0;
             var scoreC = document.getElementById("score");
+            hscore = document.getElementById("hsNumber")
             function updateScore(ds){
                 score+=ds;
                 scoreC.textContent = score;
